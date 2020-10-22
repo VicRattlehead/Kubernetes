@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: nginxbackend
+    labels:
+        app: backend
+        env: dev
+spec:
+    containers:
+    - name: contbackend
+    image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+    name: nginxfrontend
+    labels:
+        app: frontend
+        env: dev
+spec:
+containers:
+     - name: contfrontend
+     image: nginx:alpine

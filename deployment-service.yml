@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  strategy:
+    type: Recreate # ciclo de vida del pod, si se muere crea otro nuevo
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ng
+  template:
+    metadata:
+      labels:
+        app: ng
+    spec:
+      volumes:
+        - name: ng-pv-storage
+          persistentVolumeClaim:
+            claimName: ng-pv-claim
+      containers:
+        - name: ng
+          image: nginx
+          ports:
+            - containerPort: 80
+          env:
+            - name: DEMO_GREETING
+              value: "Hello from the environment"
+            - name: DEMO_FAREWELL
+              value: "Such a sweet sorrow"
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: ng-pv-storage # el nombre del volumen
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    app: ng
+spec:
+  selector:
+    app: ng
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      name: ng-port

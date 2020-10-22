@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodehello-deployment
+spec:
+  strategy:
+    type: Recreate # ciclo de vida del pod, si se muere crea otro nuevo
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodehello
+  template:
+    metadata:
+      labels:
+        app: nodehello
+    spec:
+      containers:
+        - name: nodehello
+          image: gcr.io/google-samples/node-hello:1.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DEMO_GREETING
+              value: "Hello from the environment"
+            - name: DEMO_FAREWELL
+              value: "Such a sweet sorrow"
+

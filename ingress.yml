@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: codeurjc-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+spec:
+  rules:
+    - host: curso.minikube.io
+      http:
+        paths:
+          - path: /anuncios/
+            backend:
+              serviceName: java-webapp-db-service
+              servicePort: 8080
+          - path: /gatos
+            backend:
+              serviceName: webgatos-servie
+              servicePort: 5000
+          - path: /hello
+            backend:
+              serviceName: nodehello-service
+              servicePort: 5001

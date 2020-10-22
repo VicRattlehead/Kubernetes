@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-deployment
+  labels:
+    app: python
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python
+  template:
+    metadata:
+      labels:
+        app: python
+    spec:
+      containers:
+        - name: contpython1
+          image: python:3.7-alpine
+          command: [ 'sh', '-c', 'python -m http.server 8082' ]
+        - name: contpython2
+          image: python:3.7-alpine
+          command: [ 'sh', '-c', 'python -m http.server 8083' ]

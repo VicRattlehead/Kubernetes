@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx4
+  labels:
+    app: nginx
+spec:
+  volumes:
+    - name: podinfo
+      downwardAPI:
+        items:
+          - path: "annotations"
+            fieldRef:
+              fieldPath: metadata.annotations
+          - path: "labels"
+            fieldRef:
+              fieldPath: metadata.labels
+  containers:
+    - image: nginx:latest
+      name: nginx
+      volumeMounts:
+        - mountPath: /etc/podinfo # crea la ruta
+          name: podinfo
+

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: ngxcont
+spec:
+    containers:
+        - name: contuno
+        image: python:3.6-alpine
+        command: ['sh', '-c', 'echo Estoy en el contenedor uno >  index.html && python -m http.server 8082']
+        - name: contdos
+        image: python:3.6-alpine
+        command: ['sh', '-c', 'echo Estoy en el contenedor dos > index.html && python -m http.server 8083']
